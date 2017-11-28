@@ -10,7 +10,6 @@
 #include "froeling_com.h"
 
 ESP8266WebServer HttpDispatcher::server = ESP8266WebServer(80);
-
 void HttpDispatcher::setup()
 {  
   if (MDNS.begin("FroelingCom")) 
@@ -51,7 +50,10 @@ void HttpDispatcher::setup()
     json = String();
   });
 
-  server.on("/data", HTTP_GET, HttpDispatcher::handleData);
+  server.on("/restart", HTTP_POST, [](){
+    server.send(200);
+    ESP.restart();
+  });
 
   server.begin();
   Log.info("HTTP server started.\r\n");
@@ -88,53 +90,6 @@ void HttpDispatcher::handleRoot()
   server.send(200, "text/plain", line.c_str());
 }
 
-void HttpDispatcher::handleData()
-{
-  DynamicJsonBuffer jsonBuffer;
-  JsonObject& json = jsonBuffer.createObject();
-  json["tCurrentMainState"] = tFroeComStmData.tCurrentMainState;
-  json["tCurrentSubState"] = tFroeComStmData.tCurrentSubState;
-  json["cReceiveBuffer"] = tFroeComStmData.cReceiveBuffer;
-  json["iInBuffPointer"] = tFroeComStmData.iInBuffPointer;
-  //json["cRbSendFlag"] = tFroeComStmData.cRbSendFlag;
-  json["iMsgLength"] = tFroeComStmData.iMsgLength;
-  json["glsUserID"] = FROELING_USER_ID;
-  json["iLastFroelingTimestamp"] = tFroeComStmData.iLastFroelingTimestamp;
-  json["ulLastSystemTimestamp"] = tFroeComStmData.ulLastSystemTimestamp;
-  json["status"] = froeling_proc_value_array[0];
-  json["zustand"] = froeling_proc_value_array[1];
-  json["rost"] = froeling_proc_value_array[2];
-  json["kesseltemp"] = froeling_proc_value_array[3];
-  json["abgastemp"] = froeling_proc_value_array[4];
-  json["abgas_sw"] = froeling_proc_value_array[5];
-  json["kess_stell_gr"] = froeling_proc_value_array[6];
-  json["saugzug"] = froeling_proc_value_array[7];
-  json["prim_luft"] = froeling_proc_value_array[8];
-  json["prim_kl_pos"] = froeling_proc_value_array[9];
-  json["rest_o2"] = froeling_proc_value_array[10];
-  json["o2_regler"] = froeling_proc_value_array[11];
-  json["sek_luft"] = froeling_proc_value_array[12];
-  json["sek_kl_pos"] = froeling_proc_value_array[13];
-  json["puffer_oben"] = froeling_proc_value_array[14];
-  json["puffer_unten"] = froeling_proc_value_array[15];
-  json["puffer_pu"] = froeling_proc_value_array[16];
-  json["boilertemp"] = froeling_proc_value_array[17];
-  json["oelkessel"] = froeling_proc_value_array[18];
-  json["aussentemp"] = froeling_proc_value_array[19];
-  json["vorlauftemp_1sw"] = froeling_proc_value_array[20];
-  json["vorlauftemp_1"] = froeling_proc_value_array[21];
-  json["kty6_h2"] = froeling_proc_value_array[22];
-  json["kty7_h2"] = froeling_proc_value_array[23];
-  json["laufzeit"] = froeling_proc_value_array[24];
-  json["f_halt"] = froeling_proc_value_array[25];
-  json["boardtemp"] = froeling_proc_value_array[26];  
-
-  char out[1024];
-  json.printTo(out, sizeof(out));
-  
-  server.send(200, "application/json", out);
-}
-
 void HttpDispatcher::handleError(char* message)
 {
   Log.error("%s\r\n", message);
@@ -146,13 +101,27 @@ void HttpDispatcher::handleError(char* message)
 
 void HttpDispatcher::registerJsonHandler(char* key, JsonHandlerFunction getHandler, JsonHandlerFunction postHandler)
 {
+  registerJsonGetHandler(key, getHandler);
+  registerJsonPostHandler(key, postHandler);
+}
+
+void HttpDispatcher::registerJsonGetHandler(char* key, JsonHandlerFunction getHandler)
+{
   String url = "/";
   url.concat(key);
+    
   server.on(url.c_str(), HTTP_GET, [this, getHandler]() {
     sendJsonResponse(getHandler);
   });
-  server.on(url.c_str(), HTTP_POST, [this, getHandler, postHandler]() {
+}
+
+void HttpDispatcher::registerJsonPostHandler(char* key, JsonHandlerFunction postHandler, bool saveConfig)
+{
+  String url = "/";
+  url.concat(key);
   
+  server.on(url.c_str(), HTTP_POST, [this, postHandler, saveConfig]() {
+
     DynamicJsonBuffer jsonBuffer;
     JsonObject& json = jsonBuffer.parseObject(server.arg("plain"));
   
@@ -162,9 +131,18 @@ void HttpDispatcher::registerJsonHandler(char* key, JsonHandlerFunction getHandl
       return;
     }
     postHandler(json);
-    configService.save();
-    sendJsonResponse(getHandler);
+    if (saveConfig)
+    { 
+      configService.save();
+    }
+
+    server.send(200);
   });
+}
+
+void HttpDispatcher::registerJsonPostHandler(char* key, JsonHandlerFunction postHandler)
+{
+  registerJsonPostHandler(key, postHandler, true);
 }
 
 void HttpDispatcher::sendJsonResponse(JsonHandlerFunction getHandler)
@@ -210,7 +188,7 @@ bool HttpDispatcher::handleFileRead(String path){
   Log.debug("handleFileRead: %s\r\n", path.c_str());
   if(path.endsWith("/")) 
   {
-    path += "index.htm";
+    path += "index.html";
   }
   String contentType = getContentType(path);
   String pathWithGz = path + ".gz";

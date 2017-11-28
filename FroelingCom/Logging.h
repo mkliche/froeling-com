@@ -1,6 +1,7 @@
 #ifndef Logging_h
 #define Logging_h
 
+#include "AbstractConfig.h"
 #include <inttypes.h>
 #include <stdarg.h>
 #if defined(ARDUINO) && ARDUINO >= 100
@@ -16,7 +17,7 @@
 #define LOG_LEVEL_VERBOSE 4
 
 // default loglevel if nothing is set from user
-#define LOGLEVEL LOG_LEVEL_DEBUG 
+#define LOGLEVEL LOG_LEVEL_NOOUTPUT
 
 #define CR "\r\n"
 #define LOGGING_VERSION 1
@@ -63,7 +64,7 @@
 * <tr><td>06 MAR 2012</td><td>implement a preinstanciate object (like in Wire, ...)</td></tr>
 * <tr><td></td><td>methode init get now loglevel and baud parameter</td></tr>
 */
-class Logging {
+class Logging : public AbstractConfig {
   
   private:
       int _level;
@@ -130,7 +131,13 @@ class Logging {
     */
   
       void verbose(char* msg, ...);   
-  
+
+    void toJSON(JsonObject& json);
+    void fromJSON(JsonObject& json);
+    char* getKey();
+
+    static constexpr const char* const COLUMN_SERIAL = "serial";
+    static constexpr const char* const COLUMN_LEVEL = "level";
       
   private:
       void print(const char *format, va_list args);

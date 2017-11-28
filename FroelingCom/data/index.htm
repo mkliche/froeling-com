@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FroelingCom</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+          crossorigin="anonymous">
+
+    <!-- Custom styles for this template -->
+    <link href="/css/style.css" rel="stylesheet">
+
+</head>
+<body>
+
+<div class="container">
+    <div class="header clearfix">
+        <nav>
+            <ul class="nav nav-pills pull-right">
+                <li role="presentation" class="active"><a href="#">Dashboard</a></li>
+                <li role="presentation"><a href="#">Einstellungen</a></li>
+            </ul>
+        </nav>
+        <h3 class="text-muted">FroelingCom</h3>
+    </div>
+
+    <div class="row gauges">
+        <div class="col-xs-6 col-md-4">
+            <div>
+                <div id="puffer_oben" data-label="Puffer oben" data-green-from="45" data-green-to="80" data-red-from="85" data-red-to="100" data-yellow-from="80" data-yellow-to="85" data-minor-ticks="5"></div>
+            </div>
+        </div>
+        <div class="col-xs-6 col-md-4">
+            <div>
+                <div id="puffer_unten" data-label="Puffer unten" data-green-from="30" data-green-to="80" data-red-from="85" data-red-to="100" data-yellow-from="80" data-yellow-to="85" data-minor-ticks="5"></div>
+            </div>
+        </div>
+        <div class="col-xs-6 col-md-4">
+            <div>
+                <div id="boilertemp" data-label="Boiler" data-green-from="45" data-green-to="80" data-red-from="85" data-red-to="100" data-yellow-from="80" data-yellow-to="85" data-minor-ticks="5"></div>
+            </div>
+        </div>
+        <div class="col-xs-6 col-md-4">
+            <div>
+                <div id="abgastemp" data-max="300" data-label="Abgastemp." data-green-from="130" data-green-to="230" data-red-from="250" data-red-to="300" data-yellow-from="230" data-yellow-to="250" data-minor-ticks="5"></div>
+            </div>
+        </div>
+        <div class="col-xs-6 col-md-4">
+            <div>
+                <div id="kesseltemp" data-label="Kesseltemp." data-green-from="30" data-green-to="85" data-red-from="90" data-red-to="100" data-yellow-from="85" data-yellow-to="90" data-minor-ticks="5"></div>
+            </div>
+        </div>
+        <div class="col-xs-6 col-md-4">
+            <div>
+                <div id="aussentemp" data-min="-30" data-max="40" data-label="Außentemp." data-green-from="20" data-green-to="50" data-red-from="-30" data-red-to="0" data-yellow-from="0" data-yellow-to="20" data-minor-ticks="5"></div>
+            </div>
+        </div>
+        <div class="col-xs-6 col-md-4">
+            <div>
+                <div id="saugzug" data-label="Saugzug" data-minor-ticks="5"></div>
+            </div>
+        </div>
+        <div class="col-xs-6 col-md-4">
+            <div>
+                <div id="oelkessel" data-label="Ölkessel" data-green-from="30" data-green-to="85" data-red-from="90" data-red-to="100" data-yellow-from="85" data-yellow-to="90" data-minor-ticks="5"></div>
+            </div>
+        </div>
+        <div class="col-xs-6 col-md-4">
+            <div>
+                <div id="vorlauftemp_1" data-label="Vorlauf 1" data-minor-ticks="5"></div>
+            </div>
+        </div>
+        <div class="col-xs-6 col-md-4">
+            <div>
+                <div id="vorlauftemp_1sw" data-label="Vorlauf 1 SW" data-minor-ticks="5"></div>
+            </div>
+        </div>
+        <div class="col-xs-6 col-md-4">
+            <div>
+                <div id="abgas_sw" data-max="300" data-label="Abgastemp. SW" data-minor-ticks="5"></div>
+            </div>
+        </div>
+        <div class="col-xs-6 col-md-4">
+            <div>
+                <div id="rest_o2" data-max="30" data-label="Rest O2" data-minor-ticks="10" data-major-ticks='["0","10","20","30"]'></div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2017 Marcus Kliche</p>
+    </footer>
+
+</div> <!-- /container -->
+
+<script
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script src="/js/dashboard.js"></script>
+
+</body>
+</html>

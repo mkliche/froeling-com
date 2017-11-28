@@ -129,6 +129,8 @@ void ConfigService::registerConfig(AbstractConfig* config)
   }
 
   configs[configCount - 1] = config;
+
+  Log.debug("Registered config \"%s\"\r\n", config->getKey());
 }
 
 ConfigService configService = ConfigService();

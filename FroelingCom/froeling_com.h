@@ -68,7 +68,7 @@ extern int FroeComSTM(void);
 
 // variables
 // ---------------------------------------
-extern unsigned int froeling_proc_value_array[];
+extern int froeling_proc_value_array[];
 extern unsigned int froeling_time_array[];
 
 #endif //_HANDY_H_

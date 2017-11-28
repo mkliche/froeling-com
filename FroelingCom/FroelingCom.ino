@@ -7,12 +7,14 @@
 // #include "SerialCommandDispatcher.h"
 #include "OTAUpdate.h"
 #include "HttpDispatcher.h"
-#include "froeling_com.h"
+#include "FTP.h"
+#include "Froeling.h"
+#include "MQTT.h"
+#include "ThingSpeakBroker.h"
+#include "ConfigService.h"
 
 #define GREEN_LED 13
 #define RED_LED 14
-
-#define LOGLEVEL LOG_LEVEL_DEBUG
 
 void setup() {
 
@@ -22,24 +24,34 @@ void setup() {
   digitalWrite(RED_LED, LOW);
 
   Log.init(LOGLEVEL, 9600);
+  ftp.init();
+  mqtt.init();
+  tsBroker.init();
   
   Wifi::setup();
   otaUpdate.setup();
-  // dispatcher.setup();
+  // dispatcher.setup();  
+  
   httpDispatcher.setup();
   telnet.setup();
-  // configService.setup();
-
-  FroeCom_Init();
+  
+  configService.setup();
+  ftp.setup();  
+  froeling.setup();  
+  tsBroker.setup();
+  mqtt.setup();  
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
   otaUpdate.loop();
   if (!otaUpdate.inProgress) {
-    FroeComSTM();
+    froeling.loop();
     // dispatcher.loop();
     telnet.loop();
     httpDispatcher.loop();
+    ftp.loop();
+    mqtt.loop();
+    tsBroker.loop();
   }
 }

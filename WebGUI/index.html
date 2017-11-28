@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FroelingCom</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+          crossorigin="anonymous">
+
+    <!-- Custom styles for this template -->
+    <link href="/style.css" rel="stylesheet">
+
+</head>
+<body>
+
+<div class="container">
+    <div class="header clearfix">
+        <nav>
+            <ul class="nav nav-pills pull-right">
+                <li role="presentation" class="active"><a href="#dashboard" data-toggle="tab">Dashboard</a></li>
+                <li role="presentation"><a href="#settings" data-toggle="tab">Einstellungen</a></li>
+            </ul>
+        </nav>
+        <h1 class="text-muted h3">FroelingCom</h1>
+    </div>
+
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="dashboard">
+            <h2>Dashboard</h2>
+            <div class="row gauges">
+                <div class="col-xs-6 col-md-4">
+                    <div>
+                        <div id="puffer_oben" data-label="Puffer oben" data-green-from="45" data-green-to="80"
+                             data-red-from="85" data-red-to="100" data-yellow-from="80" data-yellow-to="85"
+                             data-minor-ticks="5"></div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-md-4">
+                    <div>
+                        <div id="puffer_unten" data-label="Puffer unten" data-green-from="30" data-green-to="80"
+                             data-red-from="85" data-red-to="100" data-yellow-from="80" data-yellow-to="85"
+                             data-minor-ticks="5"></div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-md-4">
+                    <div>
+                        <div id="boilertemp" data-label="Boiler" data-green-from="45" data-green-to="80" data-red-from="85"
+                             data-red-to="100" data-yellow-from="80" data-yellow-to="85" data-minor-ticks="5"></div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-md-4">
+                    <div>
+                        <div id="abgastemp" data-max="300" data-label="Abgastemp." data-green-from="130" data-green-to="230"
+                             data-red-from="250" data-red-to="300" data-yellow-from="230" data-yellow-to="250"
+                             data-minor-ticks="5"></div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-md-4">
+                    <div>
+                        <div id="kesseltemp" data-label="Kesseltemp." data-green-from="30" data-green-to="85"
+                             data-red-from="90" data-red-to="100" data-yellow-from="85" data-yellow-to="90"
+                             data-minor-ticks="5"></div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-md-4">
+                    <div>
+                        <div id="aussentemp" data-min="-30" data-max="40" data-label="Außentemp." data-green-from="20"
+                             data-green-to="50" data-red-from="-30" data-red-to="0" data-yellow-from="0" data-yellow-to="20"
+                             data-minor-ticks="5"></div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-md-4">
+                    <div>
+                        <div id="saugzug" data-label="Saugzug" data-minor-ticks="5"></div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-md-4">
+                    <div>
+                        <div id="oelkessel" data-label="Ölkessel" data-green-from="30" data-green-to="85" data-red-from="90"
+                             data-red-to="100" data-yellow-from="85" data-yellow-to="90" data-minor-ticks="5"></div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-md-4">
+                    <div>
+                        <div id="vorlauftemp_1" data-label="Vorlauf 1" data-minor-ticks="5"></div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-md-4">
+                    <div>
+                        <div id="vorlauftemp_1sw" data-label="Vorlauf 1 SW" data-minor-ticks="5"></div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-md-4">
+                    <div>
+                        <div id="abgas_sw" data-max="300" data-label="Abgastemp. SW" data-minor-ticks="5"></div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-md-4">
+                    <div>
+                        <div id="rest_o2" data-max="30" data-label="Rest O2" data-minor-ticks="10"
+                             data-major-ticks='["0","10","20","30"]'></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div role="tabpanel" class="tab-pane" id="settings">
+            <h2>Einstellungen</h2>
+            <button id="restart" class="btn btn-default">Neu starten</button>
+            <form action="/mqtt" method="post" name="mqtt" class="form-horizontal">
+                <fieldset>
+                    <legend>MQTT</legend>
+                    <div class="form-group">
+                        <label for="mqtt_server" class="col-sm-2 control-label">Server</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="server" class="form-control" id="mqtt_server" placeholder="Server">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="mqtt_port" class="col-sm-2 control-label">Port</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="port" class="form-control" id="mqtt_port" placeholder="Port">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="mqtt_username" class="col-sm-2 control-label">Benutzername</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="username" class="form-control" id="mqtt_username" placeholder="Benutzername">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="mqtt_password" class="col-sm-2 control-label">Passwort</label>
+                        <div class="col-sm-10">
+                            <input type="password" name="password" class="form-control" id="mqtt_password" placeholder="Passwort">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="mqtt_topic_prefix" class="col-sm-2 control-label">Topic-Präfix</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="topic_prefix" class="form-control" id="mqtt_topic_prefix" placeholder="Topic-Präfix">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="mqtt_client_name" class="col-sm-2 control-label">Client-Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="client_name" class="form-control" id="mqtt_client_name" placeholder="Client-Name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <div class="checkbox">
+                                <label>
+                                    <input name="enable" type="checkbox" value="1"> MQTT aktivieren
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default">Speichern</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+            <form action="/thingspeak" method="post" name="thingspeak" class="form-horizontal">
+                <fieldset>
+                    <legend>ThingSpeak</legend>
+                    <div class="form-group">
+                        <label for="ts_channel" class="col-sm-2 control-label">Channel ID</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="channel" class="form-control" id="ts_channel" placeholder="ThingSpeak Channel ID">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ts_write_key" class="col-sm-2 control-label">Write API Key</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="write_key" class="form-control" id="ts_write_key" placeholder="Write API Key">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ts_interval" class="col-sm-2 control-label">Intervall</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="interval" class="form-control" id="ts_interval" placeholder="Benachrichtigungsintervall in Sekunden">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ts_field_1" class="col-sm-2 control-label">Wert Feld 1</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="field_1" class="form-control" id="ts_field_1" placeholder="Wert für Feld 1">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ts_field_2" class="col-sm-2 control-label">Wert Feld 2</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="field_2" class="form-control" id="ts_field_2" placeholder="Wert für Feld 2">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ts_field_3" class="col-sm-2 control-label">Wert Feld 3</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="field_3" class="form-control" id="ts_field_3" placeholder="Wert für Feld 3">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ts_field_4" class="col-sm-2 control-label">Wert Feld 4</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="field_4" class="form-control" id="ts_field_4" placeholder="Wert für Feld 4">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ts_field_5" class="col-sm-2 control-label">Wert Feld 5</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="field_5" class="form-control" id="ts_field_5" placeholder="Wert für Feld 5">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ts_field_6" class="col-sm-2 control-label">Wert Feld 6</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="field_6" class="form-control" id="ts_field_6" placeholder="Wert für Feld 6">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ts_field_7" class="col-sm-2 control-label">Wert Feld 7</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="field_7" class="form-control" id="ts_field_7" placeholder="Wert für Feld 7">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ts_field_8" class="col-sm-2 control-label">Wert Feld 8</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="field_8" class="form-control" id="ts_field_8" placeholder="Wert für Feld 8">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <div class="checkbox">
+                                <label>
+                                    <input name="enable" type="checkbox" value="1"> ThingSpeak aktivieren
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default">Speichern</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2017</p>
+    </footer>
+
+</div> <!-- /container -->
+
+<script
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script src="/dashboard.js"></script>
+
+</body>
+</html>

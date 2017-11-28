@@ -23,7 +23,7 @@
 // local variables
 //******************************************
 T_FROE_COM_DATA tFroeComStmData;
-unsigned int froeling_proc_value_array[NB_OF_PROCESS_VALUES];
+int froeling_proc_value_array[NB_OF_PROCESS_VALUES];
 unsigned int froeling_time_array[6];
 
 //******************************************
@@ -85,7 +85,7 @@ int FroeComSTM(void)
 		{
 			// init variables
 			tFroeComStmData.glsUserID = FROELING_USER_ID;
-			memset(froeling_proc_value_array, 0, NB_OF_PROCESS_VALUES*sizeof(unsigned int));
+			memset(froeling_proc_value_array, 0, NB_OF_PROCESS_VALUES*sizeof(int));
 			memset(froeling_time_array, 0, 6*sizeof(unsigned int));
 			memset(&tFroeComStmData,0, sizeof(T_FROE_COM_DATA));
 

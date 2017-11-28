@@ -86,4 +86,27 @@ void Logging::print(const char *format, va_list args) {
   free(buf);
 }
 
+char* Logging::getKey()
+{
+  return "logging";
+}
+
+void Logging::toJSON(JsonObject& json)
+{
+  json[Logging::COLUMN_SERIAL] = _serial;
+  json[Logging::COLUMN_LEVEL] = _level;
+}
+
+void Logging::fromJSON(JsonObject& json)
+{
+  if (json.containsKey(Logging::COLUMN_SERIAL))
+  {
+    _serial = json.get<boolean>(Logging::COLUMN_SERIAL);
+  }
+  if (json.containsKey(Logging::COLUMN_LEVEL))
+  {
+    _level = json.get<int>(Logging::COLUMN_LEVEL);
+  }  
+}
+
 Logging Log = Logging();

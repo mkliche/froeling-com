@@ -1,5 +1,5 @@
 /*############################################################################
- Copyright:      Markus Kotschenreuther
+ Copyright:      Markus Kot.
  Author:         
  Remarks:
  known Problems: none

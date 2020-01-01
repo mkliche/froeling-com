@@ -56,21 +56,10 @@ void MQTT::loop()
     {
       providers[i]->toJSON(json);
 
-      for(JsonObject::iterator it = json.begin(); it != json.end(); ++it)
-      {        
-        if (it->value.is<const char*>())
-        {
-          key = it->key;
-          value = it->value.as<const char*>();
-
-          if (value != nullptr)
-          {    
-            Log.info("Publishing to MQTT topic with key \"%s\" and value \"%s\"\r\n", key, value);    
-            String topic = topic_prefix + "/" + key;
-            client.publish(topic.c_str(), value);
-          }
-        }
-      }
+      String json_buffer;
+      json.printTo(json_buffer);
+      String topic = topic_prefix + "/all";
+      client.publish(topic.c_str(), json_buffer.c_str()); 
      
       providers[i]->lastMessage = now;      
     }

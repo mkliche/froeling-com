@@ -1,6 +1,8 @@
 #ifndef MQTT_h
 #define MQTT_h
 
+#define MQTT_MAX_PACKET_SIZE 2048
+
 #include <PubSubClient.h>
 #include "AbstractConfig.h"
 #include "AbstractJsonDataBroker.h"
